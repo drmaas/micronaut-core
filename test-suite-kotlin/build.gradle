@@ -44,6 +44,7 @@ dependencies {
     testImplementation project(':tracing')
     kaptTest project(':inject-java')
     kaptTest project(':validation')
+    kaptTest 'org.ow2.asm:asm-commons:7.2'
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
     testRuntimeOnly group: 'com.amazonaws', name: 'aws-java-sdk-lambda', version: '1.11.920'
     if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_15)) {

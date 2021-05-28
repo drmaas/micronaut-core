@@ -19,6 +19,7 @@ import io.micronaut.http.*
 import io.micronaut.http.annotation.*
 import io.micronaut.scheduling.TaskExecutors
 import kotlinx.coroutines.*
+import org.slf4j.MDC
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Named
@@ -133,6 +134,16 @@ class SuspendController(
         val before = "${suspendRequestScopedService.requestId},${Thread.currentThread().id}"
         delay(10) // suspend
         val after = "${suspendRequestScopedService.requestId},${Thread.currentThread().id}"
+        return "$before,$after"
+    }
+
+    @Get("/keepMDCAfterSuspend")
+    suspend fun keepMDCAfterSuspend(): String {
+        val key = "test"
+        val before = "test"
+        MDC.put(key, before)
+        delay(10) // suspend
+        val after = MDC.get(key)
         return "$before,$after"
     }
 }

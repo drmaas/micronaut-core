@@ -234,5 +234,13 @@ class SuspendControllerSpec : StringSpec() {
             beforeThreadId shouldNotBe afterThreadId // it will be the default co-routine dispatcher
             response.status shouldBe HttpStatus.OK
         }
+
+        "test keeping MDC after a suspend" {
+            val response = client.exchange(GET<Any>("/suspend/keepMDCAfterSuspend"), String::class.java).awaitSingle()
+            val body = response.body.get()
+            val (beforeValue, afterValue) = body.split(',')
+            afterValue shouldBe beforeValue
+            response.status shouldBe HttpStatus.OK
+        }
     }
 }
